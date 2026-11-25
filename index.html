@@ -319,7 +319,7 @@ function renderProducts() {
   const search = document.getElementById("search").value.toLowerCase();
 
   const filtered = productsData.filter(p =>
-    (selectedCategory==="Todos" || p.category===selectedCategory) &&
+    (selectedCategory === "Todos" || p.category === selectedCategory) &&
     (p.name.toLowerCase().includes(search) ||
      p.description.toLowerCase().includes(search))
   );
