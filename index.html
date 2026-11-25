@@ -93,6 +93,54 @@ footer p{color:#c7c1b9;font-size:12px;margin-top:12px}
 .whatsapp-float{position:fixed;bottom:20px;right:20px;width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#25d366;color:white;font-size:26px;z-index:30;box-shadow:0 5px 20px #0002}
 @media(max-width:850px){.header-inner{flex-wrap:wrap}nav{order:3;width:100%;justify-content:center}.hero{grid-template-columns:1fr;padding-top:48px;gap:28px}}
 @media(max-width:520px){.header-inner{padding:12px 14px}.logo{font-size:26px}.search-box{width:115px}.cart-button{padding:11px}.hero{padding:42px 20px}.section{padding:48px 17px}.section-heading h2,.offer-inner h2{font-size:31px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product-image{height:170px}.product-info{padding:11px}.product-info h3{font-size:15px}.product-bottom{align-items:flex-start;flex-direction:column}.add-button{width:100%}}
+/* PRODUCTOS EN FICHAS COMPACTAS */
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.product-image {
+  height: 190px;
+}
+
+.product-info {
+  padding: 14px;
+}
+
+.product-info h3 {
+  font-size: 16px;
+}
+
+.product-description {
+  font-size: 12px;
+  min-height: 34px;
+}
+
+@media (max-width: 850px) {
+  .products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .product-image {
+    height: 145px;
+  }
+
+  .product-info {
+    padding: 10px;
+  }
+
+  .product-info h3 {
+    font-size: 14px;
+  }
+}
 </style>
 </head>
 <body>
