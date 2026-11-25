@@ -1,1 +1,8 @@
-
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "makki-tienda",
+  "compatibility_date": "2026-11-25",
+  "assets": {
+    "directory": "./"
+  }
+}
