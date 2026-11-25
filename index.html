@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAKKI | Todo lo que buscas</title>
+<style>
+:root {
+  --black:#171717;
+  --beige:#e9e1d5;
+  --cream:#f8f6f2;
+  --gray:#777;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--cream);
+  color:var(--black);
+}
+header {
+  background:var(--black);
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+.logo {
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:7px;
+}
+header p {
+  color:#d5c9b8;
+  font-size:12px;
+  letter-spacing:3px;
+}
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:20px;
+  padding:15px;
+  background:white;
+}
+nav a {
+  color:#222;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:bold;
+}
+.hero {
+  background:var(--beige);
+  text-align:center;
+  padding:55px 20px;
+}
+.hero h1 {
+  font-size:clamp(30px,6vw,52px);
+  margin:0 0 12px;
+}
+.hero p { color:#555; }
+.hero button {
+  background:var(--black);
+  color:white;
+  border:0;
+  padding:14px 25px;
+  cursor:pointer;
+  margin-top:12px;
+}
+.container {
+  max-width:1150px;
+  margin:auto;
+  padding:30px 18px;
+}
+.section-title {
+  text-align:center;
+  margin-bottom:25px;
+}
+.search {
+  width:100%;
+  max-width:500px;
+  display:block;
+  margin:20px auto;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:5px;
+  font-size:15px;
+}
+.categories {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:20px 0 30px;
+}
+.categories button {
+  background:white;
+  border:1px solid #ddd;
+  padding:10px 16px;
+  cursor:pointer;
+  border-radius:30px;
+}
+.categories button.active {
+  background:var(--black);
+  color:white;
+}
+.products {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:17px;
+}
+.product {
+  background:white;
+  border:1px solid #eee;
+  padding:12px;
+  border-radius:7px;
+}
+.product img {
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  background:var(--beige);
+  border-radius:5px;
+}
+.product h3 {
+  font-size:15px;
+  margin:12px 0 5px;
+}
+.product p {
+  color:var(--gray);
+  font-size:12px;
+  min-height:28px;
+}
+.price {
+  font-weight:bold;
+  margin:10px 0;
+}
+.add {
+  width:100%;
+  padding:11px;
+  background:var(--black);
+  color:white;
+  border:0;
+  cursor:pointer;
+  border-radius:4px;
+}
+</style>
+  <style>
+.cart {
+  background:white;
+  padding:20px;
+  border-radius:8px;
+  margin-top:35px;
+}
+.cart-item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #eee;
+  padding:13px 0;
+  font-size:13px;
+}
+.qty button {
+  border:0;
+  padding:6px 10px;
+  background:var(--beige);
+  cursor:pointer;
+}
+.total {
+  text-align:right;
+  font-size:20px;
+  font-weight:bold;
+  margin:20px 0;
+}
+.whatsapp {
+  display:block;
+  width:100%;
+  padding:15px;
+  background:#208b55;
+  color:white;
+  border:0;
+  border-radius:5px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.empty {
+  text-align:center;
+  color:var(--gray);
+  padding:20px;
+}
+footer {
+  background:var(--black);
+  color:white;
+  text-align:center;
+  padding:30px 15px;
+  margin-top:40px;
+  font-size:13px;
+}
+@media(max-width:480px) {
+  .products {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .logo { font-size:27px; }
+}
+</style>
+
+<body>
+
+<header>
+  <div class="logo">MAKKI</div>
+  <p>VARIEDADES · CALIDAD · ESTILO</p>
+</header>
+
+<nav>
+  <a href="#inicio">INICIO</a>
+  <a href="#productos">PRODUCTOS</a>
+  <a href="#categorias">CATEGORÍAS</a>
+  <a href="#carrito">MI CARRITO</a>
+</nav>
+
+<section class="hero" id="inicio">
+  <h1>Todo lo que buscas, en un solo lugar.</h1>
+  <p>Descubre nuestros productos y encuentra tus favoritos.</p>
+  <button onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">
+    VER PRODUCTOS
+  </button>
+</section>
+
+<main class="container" id="productos">
+  <h2 class="section-title">Nuestros productos</h2>
+
+  <input class="search" id="search"
+    placeholder="¿Qué estás buscando?"
+    oninput="renderProducts()">
+
+  <div class="categories" id="categories"></div>
+  <div class="products" id="products"></div>
+
+  <section class="cart" id="carrito">
+    <h2>🛒 Mi carrito</h2>
+    <div id="cartItems"></div>
+    <div class="total" id="total">Total: $0</div>
+    <button class="whatsapp" onclick="sendOrder()">
+      FINALIZAR PEDIDO POR WHATSAPP
+    </button>
+  </section>
+</main>
+
+<footer>
+  <h2>MAKKI</h2>
+  <p>Gracias por comprar con nosotros.</p>
+  <p>Pedidos por WhatsApp: 322 313 0051</p>
+</footer>
+  <script>
+// ======================================
+// AGREGA TUS PRODUCTOS EN ESTA LISTA
+// ======================================
+
+const productsData = [
+  {
+    id:1,
+    name:"Producto de ejemplo 1",
+    category:"Juguetes",
+    description:"Escribe aquí la descripción.",
+    price:15000,
+    image:""
+  },
+  {
+    id:2,
+    name:"Producto de ejemplo 2",
+    category:"Belleza",
+    description:"Escribe aquí la descripción.",
+    price:12000,
+    image:""
+  },
+  {
+    id:3,
+    name:"Producto de ejemplo 3",
+    category:"Hogar",
+    description:"Escribe aquí la descripción.",
+    price:20000,
+    image:""
+  }
+];
+
+// ======================================
+// CONFIGURACIÓN DE LA TIENDA
+// ======================================
+
+const whatsappNumber = "573223130051";
+let cart = [];
+let selectedCategory = "Todos";
+
+const money = value => new Intl.NumberFormat("es-CO", {
+  style:"currency",
+  currency:"COP",
+  maximumFractionDigits:0
+}).format(value);
+
+function renderCategories() {
+  const categories = ["Todos", ...new Set(productsData.map(p=>p.category))];
+
+  document.getElementById("categories").innerHTML =
+    categories.map(category => `
+      <button class="${selectedCategory===category?'active':''}"
+        onclick="selectCategory('${category.replace(/'/g,"\\'")}')">
+        ${category}
+      </button>
+    `).join("");
+}
+
+function selectCategory(category) {
+  selectedCategory = category;
+  renderCategories();
+  renderProducts();
+}
+
+function renderProducts() {
+  const search = document.getElementById("search").value.toLowerCase();
+
+  const filtered = productsData.filter(p =>
+    (selectedCategory==="Todos" || p.category===selectedCategory) &&
+    (p.name.toLowerCase().includes(search) ||
+     p.description.toLowerCase().includes(search))
+  );
+
+  document.getElementById("products").innerHTML =
+    filtered.length ? filtered.map(p => `
+      <article class="product">
+        ${p.image
+          ? <img src="${p.image}" alt="${p.name}">
+          : <div style="aspect-ratio:1;background:#e9e1d5;display:grid;place-items:center;color:#777">MAKKI</div>
+        }
+        <h3>${p.name}</h3>
+        <p>${p.description}</p>
+        <div class="price">${money(p.price)}</div>
+        <button class="add" onclick="addToCart(${p.id})">
+          AGREGAR AL CARRITO
+        </button>
+      </article>
+    `).join("") : '<p class="empty">No encontramos productos.</p>';
+}
+</script>
+  <script>
+function addToCart(id) {
+  const product = productsData.find(p => p.id === id);
+  const item = cart.find(p => p.id === id);
+
+  if (item) {
+    item.quantity++;
+  } else {
+    cart.push({...product, quantity:1});
+  }
+
+  renderCart();
+}
+
+function changeQuantity(id, change) {
+  const item = cart.find(p => p.id === id);
+  if (!item) return;
+
+  item.quantity += change;
+
+  if (item.quantity <= 0) {
+    cart = cart.filter(p => p.id !== id);
+  }
+
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById("cartItems");
+
+  if (!cart.length) {
+    container.innerHTML =
+      '<p class="empty">Tu carrito está vacío.</p>';
+  } else {
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div>
+          <strong>${item.name}</strong><br>
+          ${money(item.price)} c/u
+        </div>
+        <div class="qty">
+          <button onclick="changeQuantity(${item.id},-1)">−</button>
+          ${item.quantity}
+          <button onclick="changeQuantity(${item.id},1)">+</button>
+        </div>
+        <strong>${money(item.price * item.quantity)}</strong>
+      </div>
+    `).join("");
+  }
+
+  const total = cart.reduce(
+    (sum,item) => sum + item.price * item.quantity, 0
+  );
+
+  document.getElementById("total").textContent =
+    "Total: " + money(total);
+}
+
+function sendOrder() {
+  if (!cart.length) {
+    alert("Agrega productos a tu carrito primero.");
+    return;
+  }
+
+  const total = cart.reduce(
+    (sum,item) => sum + item.price * item.quantity, 0
+  );
+
+  let message = "¡Hola MAKKI! Quiero realizar este pedido:\n\n";
+
+  cart.forEach(item => {
+    message +=
+      ${item.name}\n +
+      Cantidad: ${item.quantity}\n +
+      Precio unitario: ${money(item.price)}\n +
+      Subtotal: ${money(item.price * item.quantity)}\n\n;
+  });
+
+  message += TOTAL: ${money(total)};
+
+  const url =
+    "https://wa.me/" + whatsappNumber +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+renderCart();
+</script>
+
+</body>
+</html>
+</head>
